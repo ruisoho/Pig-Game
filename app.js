@@ -8,3 +8,98 @@ GAME RULES:
 - The first player to reach 100 points on GLOBAL score wins the game
 
 */
+
+
+int();
+
+var scores, roundScore, activePlayer, gamePlaying;
+
+scores = [0,0];
+roundScore = 0;
+activePlayer = 0;
+ //Hides the dice when the page loads.
+document.querySelector('.dice').style.display = 'none';
+
+function int(){
+
+ 
+//document.querySelector('#current-' + activePlayer).textContent = dice;
+//Set all scores / rounds to Zero.
+document.getElementById("score-0").textContent = "0";
+document.getElementById("current-0").textContent = "0";
+document.getElementById("score-1").textContent = "0";
+document.getElementById("current-1").textContent = "0";
+};
+
+//Event Listener to roll the dices.
+document.querySelector('.btn-roll').addEventListener('click', function() { //Event Listener to roll the dices.
+        // 1. Random number
+        var dice = Math.floor(Math.random() * 6) + 1; // Gives the random number from 1 to 6 (DICE).
+
+        //2. Display the result
+        var diceDOM = document.querySelector('.dice');
+        diceDOM.style.display = 'block';
+        diceDOM.src = 'dice-' + dice + '.png';
+        document.querySelector('#current-' + activePlayer).textContent = dice;
+
+        //3. Update the round score.
+        if(dice !== 1){
+            //Add the round score to the Main Score
+            roundScore += dice;
+            document.querySelector('#current-' + activePlayer).textContent = roundScore;
+        } else{
+            nextPlayer();
+
+        
+        }
+    
+});
+
+document.querySelector('.btn-hold').addEventListener('click', function() { //Event Listener to Hold the score from the round.
+    //Add Roundscore to Score.
+    scores[activePlayer] += roundScore;
+    
+    //Update Score.
+    document.querySelector("#score-" + activePlayer).textContent = scores[activePlayer];
+
+    //Check if player won the game.
+    if(scores[activePlayer] >= 20){
+        document.querySelector("#name-" + activePlayer).textContent = "Winner!";
+        document.querySelector(".dice").style.display = "none";
+        document.querySelector(".player-" + activePlayer + ".panel-").classList.add("winner");
+        }else {
+       nextPlayer(); // The Next Player Plays!
+    }
+
+});
+
+document.querySelector('.btn-new').addEventListener("click")
+
+
+
+function nextPlayer(){ //Make the next playery play!
+    activePlayer === 0 ? activePlayer = 1 : activePlayer = 0; 
+            roundScore = 0
+             /*Alternative Code
+            if(activePlayer === 0){
+                activePlayer = 1;
+            } else {
+                activePlayer = 0;
+            } */
+            document.getElementById("current-0").textContent = "0";
+            document.getElementById("current-1").textContent = "0";
+           /*Chage the Active Player!
+           document.querySelector(".player-0-panel").classList.remove('active');
+           document.querySelector(".player-1-panel").classList.add('active');
+           */
+          document.querySelector(".player-0-panel").classList.toggle('active');
+          document.querySelector(".player-1-panel").classList.toggle('active');
+
+          document.querySelector(".dice").style.display = "none";
+}
+
+
+
+
+//document.querySelector('#current-' + activePlayer).textContent = dice;
+//document.querySelector('#score-0').textContent;
