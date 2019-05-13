@@ -13,7 +13,8 @@ RULES:
 */
 
 
-var scores, roundScore, activePlayer, gameOn, x;
+var scores, roundScore, activePlayer, gameOn;
+
 
 int();
 //Event Listener to roll the dices.
@@ -68,7 +69,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() { //Eve
         document.querySelector(".dice2").style.display = "none";
         document.querySelector(".player-" + activePlayer + "-panel").classList.add("winner");
         document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
-        document.getElementById("input").textContent = 0;
+        x.textContent=' '
         gameOn = false;   
         document.querySelector(".btn-hold").style.display = "none";
         document.querySelector(".btn-roll").style.display = "none";
@@ -76,6 +77,7 @@ document.querySelector('.btn-hold').addEventListener('click', function() { //Eve
         }else {
        nextPlayer(); // The Next Player Plays!
     }
+    
     }
 });
 
@@ -102,7 +104,7 @@ function nextPlayer(){ //Make the next playery play!
 }
 
 function numberScore() {
-      
+    x = "";
     // Get the value of the input field with id="input"
     x = document.getElementById("input").value;
   
@@ -125,9 +127,6 @@ document.querySelector('.btn-new').addEventListener("click", int, numberScore )
             scores = [0,0];
             roundScore = 0;
             activePlayer = 0;
-            
-            
-            
              //Hides the dice when the page loads.
             document.querySelector('.dice').style.display = 'none';
             document.querySelector('.dice2').style.display = 'none';
