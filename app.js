@@ -10,31 +10,42 @@ GAME RULES:
 */
 
 
-var scores, roundScore, activePlayer, gameOn;
-int();
+var scores, roundScore, activePlayer, gameOn, x;
 
+int();
 //Event Listener to roll the dices.
 document.querySelector('.btn-roll').addEventListener('click', function() { //Event Listener to roll the dices.
         if(gameOn){    
-    // 1. Random number
+        //1. Dice 1 
         var dice = Math.floor(Math.random() * 6) + 1; // Gives the random number from 1 to 6 (DICE).
-
-        //2. Display the result
+        
         var diceDOM = document.querySelector('.dice');
         diceDOM.style.display = 'block';
         diceDOM.src = 'dice-' + dice + '.png';
+        console.log(dice)
+        
+        //2. Dice 2
+        var dice2 = Math.floor(Math.random() * 6) + 1;//Gives the random number from 1 to 6 (DICE).
+        // Display the result Dice 1
+        var diceDOM2 = document.querySelector('.dice2');
+        diceDOM2.style.display = 'block';
+        diceDOM2.src = 'dice-' + dice2 + '.png';
+        console.log(dice2)
+        
         document.querySelector('#current-' + activePlayer).textContent = dice;
+        document.querySelector('#current-' + activePlayer).textContent = dice2;
 
         //3. Update the round score.
-        if(dice !== 1){
+        if((dice !== 1 && dice2 !== 1)){
             //Add the round score to the Main Score
-            roundScore += dice;
+            roundScore += dice + dice2;
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
-        } else{
+        } else {
             nextPlayer();  
         }
     }
 });
+
 
 document.querySelector('.btn-hold').addEventListener('click', function() { //Event Listener to Hold the score from the round.
     if(gameOn){
@@ -44,13 +55,21 @@ document.querySelector('.btn-hold').addEventListener('click', function() { //Eve
     //Update Score.
     document.querySelector("#score-" + activePlayer).textContent = scores[activePlayer];
 
-    //Check if player won the game.
-    if(scores[activePlayer] >= 1 ){
+    
+    // Get the value of the input field with id="input"
+    var x = document.getElementById("input").value;
+    console.log(x);
+    //Check if player won the game. // Update Max score.
+    if(scores[activePlayer] >= x ){
         document.querySelector("#name-" + activePlayer).textContent = "Winner!";
+        document.querySelector("#winnerNumber").style.display = "none";
         document.querySelector(".dice").style.display = "none";
+        document.querySelector(".dice2").style.display = "none";
         document.querySelector(".player-" + activePlayer + "-panel").classList.add("winner");
         document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
+        document.getElementById("input").textContent = 0;
         gameOn = false;
+        
         document.querySelector(".btn-hold").style.display = "none";
         document.querySelector(".btn-roll").style.display = "none";
         document.querySelector(".btn-new").style.display = "block"; 
@@ -81,21 +100,51 @@ function nextPlayer(){ //Make the next playery play!
           document.querySelector(".player-1-panel").classList.toggle('active');
 
           document.querySelector(".dice").style.display = "none";
+          document.querySelector(".dice2").style.display = "none";
 }
 
-document.querySelector('.btn-new').addEventListener("click", int)
+
+function numberScore() {
+     
+
+  
+    // Get the value of the input field with id="input"
+    x = document.getElementById("input").value;
+  
+    // If x is Not a Number or less than one or greater than 10
+    if (isNaN(x) == true || x < 1 || x > 100) {
+      alert("Number not valid or Not a Number. Please enter a Number between 1 and 100");     
+    } else {
+    document.querySelector(".score-input").style.display = "none";
+    document.getElementById("winnerNumber").innerHTML = "Wins who reach " + x +".";
+    
+  
+
+    gameOn = true;
+    
+    }
+    
+  }
+  x = document.getElementById("input").value;
+
+document.querySelector('.btn-score').addEventListener('click', numberScore); 
+
+document.querySelector('.btn-new').addEventListener("click", int, numberScore )
 
     function int(){
             scores = [0,0];
             roundScore = 0;
             activePlayer = 0;
-            gameOn = true;
-
+            
+            
+            
              //Hides the dice when the page loads.
             document.querySelector('.dice').style.display = 'none';
+            document.querySelector('.dice2').style.display = 'none';
              
             //document.querySelector('#current-' + activePlayer).textContent = dice;
             //Set all scores / rounds to Zero.
+            document.querySelector(".score-input").style.display = "block";
             document.getElementById("score-0").textContent = "0";
             document.getElementById("current-0").textContent = "0";
             document.getElementById("score-1").textContent = "0";
