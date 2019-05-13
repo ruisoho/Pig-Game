@@ -1,11 +1,14 @@
 /*
-GAME RULES:
+PIG GAME v.2.0 
+by: Rui Nves
+
+RULES:
 
 - The game has 2 players, playing in rounds
-- In each turn, a player rolls a dice as many times as he whishes. Each result get added to his ROUND score
-- BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn
+- In each turn, a player rolls 2 dices as many times as he whishes. Each result get added to his ROUND score.
+- BUT, if the player rolls a 1, all his ROUND score gets lost. After that, it's the next player's turn.
 - The player can choose to 'Hold', which means that his ROUND score gets added to his GLBAL score. After that, it's the next player's turn
-- The first player to reach 100 points on GLOBAL score wins the game
+- The first player to reach the points on GLOBAL score wins the game
 
 */
 
@@ -46,7 +49,6 @@ document.querySelector('.btn-roll').addEventListener('click', function() { //Eve
     }
 });
 
-
 document.querySelector('.btn-hold').addEventListener('click', function() { //Event Listener to Hold the score from the round.
     if(gameOn){
     //Add Roundscore to Score.
@@ -54,11 +56,10 @@ document.querySelector('.btn-hold').addEventListener('click', function() { //Eve
     
     //Update Score.
     document.querySelector("#score-" + activePlayer).textContent = scores[activePlayer];
-
-    
+   
     // Get the value of the input field with id="input"
     var x = document.getElementById("input").value;
-    console.log(x);
+
     //Check if player won the game. // Update Max score.
     if(scores[activePlayer] >= x ){
         document.querySelector("#name-" + activePlayer).textContent = "Winner!";
@@ -68,13 +69,10 @@ document.querySelector('.btn-hold').addEventListener('click', function() { //Eve
         document.querySelector(".player-" + activePlayer + "-panel").classList.add("winner");
         document.querySelector(".player-" + activePlayer + "-panel").classList.remove("active");
         document.getElementById("input").textContent = 0;
-        gameOn = false;
-        
+        gameOn = false;   
         document.querySelector(".btn-hold").style.display = "none";
         document.querySelector(".btn-roll").style.display = "none";
-        document.querySelector(".btn-new").style.display = "block"; 
-        
-
+        document.querySelector(".btn-new").style.display = "block";    
         }else {
        nextPlayer(); // The Next Player Plays!
     }
@@ -103,11 +101,8 @@ function nextPlayer(){ //Make the next playery play!
           document.querySelector(".dice2").style.display = "none";
 }
 
-
 function numberScore() {
-     
-
-  
+      
     // Get the value of the input field with id="input"
     x = document.getElementById("input").value;
   
@@ -117,15 +112,10 @@ function numberScore() {
     } else {
     document.querySelector(".score-input").style.display = "none";
     document.getElementById("winnerNumber").innerHTML = "Wins who reach " + x +".";
-    
-  
-
-    gameOn = true;
-    
+    gameOn = true;   
     }
-    
   }
-  x = document.getElementById("input").value;
+ 
 
 document.querySelector('.btn-score').addEventListener('click', numberScore); 
 
@@ -161,10 +151,3 @@ document.querySelector('.btn-new').addEventListener("click", int, numberScore )
             document.querySelector(".btn-new").style.display = "none";
     
     };
-
-
-
-
-
-//document.querySelector('#current-' + activePlayer).textContent = dice;
-//document.querySelector('#score-0').textContent;
